@@ -47,7 +47,7 @@ public class Principal {
                     System.out.println("Cerrando la aplicación...");
                     break;
                 default:
-                    System.out.println("Opción inválida");
+                    System.out.println("Opción del menu inválida");
             }
 
         }
