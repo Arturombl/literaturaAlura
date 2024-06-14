@@ -2,7 +2,7 @@ package com.aluracursos.challenge_literatura.model;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "autores")
@@ -12,10 +12,29 @@ public class Autor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private Date fechaNacimiento;
-    private Date fechaDefuncion;
-    @ManyToOne
-    private Libro libro;
+    private String fechaNacimiento;
+    private String fechaDefuncion;
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Libro> libro;
+
+    @Override
+    public String toString() {
+        return
+                ", nombre='" + nombre + '\'' +
+                ", fechaNacimiento=" + fechaNacimiento +
+                ", fechaDefuncion=" + fechaDefuncion;
+    }
+
+    public Autor(){}
+
+    public Autor(DatosAutor d){
+        this.nombre = d.nombre();
+        this.fechaNacimiento = d.fechaNacimiento();
+        this.fechaDefuncion = d.fechaDefuncion();
+    }
+
+    public Autor(List<Autor> autor) {
+    }
 
     public Long getId() {
         return id;
@@ -33,19 +52,28 @@ public class Autor {
         this.nombre = nombre;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Date getFechaDefuncion() {
+    public String getFechaDefuncion() {
         return fechaDefuncion;
     }
 
-    public void setFechaDefuncion(Date fechaDefuncion) {
+    public void setFechaDefuncion(String fechaDefuncion) {
         this.fechaDefuncion = fechaDefuncion;
+    }
+
+    public List<Libro> getLibro() {
+        return libro;
+    }
+
+    public void setLibro(List<Libro> libro) {
+        libro.forEach(l-> l.setAutor(this));
+        this.libro = libro;
     }
 }
