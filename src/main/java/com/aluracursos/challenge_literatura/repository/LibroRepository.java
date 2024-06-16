@@ -1,6 +1,5 @@
 package com.aluracursos.challenge_literatura.repository;
 
-import com.aluracursos.challenge_literatura.model.Autor;
 import com.aluracursos.challenge_literatura.model.Idioma;
 import com.aluracursos.challenge_literatura.model.Libro;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -33,7 +33,7 @@ public class Principal {
         while (opcion != 0) {
             try{
                 var menu = """
-                    >>>>>>>>>>>>LITERATURA ONE<<<<<<<<<<<<                    
+                    >>>>>>>>>>>>LITERATURA ONE<<<<<<<<<<<<
                     1 - Buscar libro por titulo
                     2 - Buscar Autor por nombre
                     3 - Listar libros registrados
@@ -42,8 +42,8 @@ public class Principal {
                     6 - listar libros por idioma
                     7 - Top 10 Libros mas Descargados
                     8 - Estadisticas
-                                  
-                    0 - Salir                   
+                    
+                    0 - Salir
                     >>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<
                     Selecciona la opcion deseada....
                     """;
