@@ -2,6 +2,7 @@ package com.aluracursos.challenge_literatura;
 
 import com.aluracursos.challenge_literatura.principal.Principal;
 import com.aluracursos.challenge_literatura.repository.AutorRepository;
+import com.aluracursos.challenge_literatura.repository.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +13,9 @@ public class ChallengeLiteraturaApplication implements CommandLineRunner {
 
 
 	@Autowired
-	private AutorRepository repository;
+	private AutorRepository autorRepository;
+	@Autowired
+	private LibroRepository libroRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ChallengeLiteraturaApplication.class, args);
@@ -20,7 +23,7 @@ public class ChallengeLiteraturaApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Principal principal = new Principal(repository);
+		Principal principal = new Principal(autorRepository, libroRepository);
 		principal.muestraElMenu();
 	}
 }

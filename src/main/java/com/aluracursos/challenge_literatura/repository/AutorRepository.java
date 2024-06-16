@@ -7,16 +7,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface AutorRepository extends JpaRepository<Autor, Long> {
 
-    @Query("SELECT a FROM Libro l JOIN l.autor a WHERE a.nombre LIKE %:nombre%")
+
+    @Query("SELECT a FROM Autor a WHERE UPPER(a.nombre) LIKE UPPER(CONCAT('%', :nombre, '%'))")
     Optional<Autor> buscaAutorBD(@Param("nombre") String nombre);
 
+    @Query("SELECT a FROM Autor a WHERE a.nombre = :nombre")
+    Optional<Autor> comprobarAutorBD(@Param("nombre") String nombre);
 
-    @Query("SELECT l FROM Libro l JOIN l.autor a WHERE l.titulo LIKE %:titulo%")
-    Optional<Libro> buscarLibroBD(@Param("titulo") String titulo);
+
+    @Query("SELECT a FROM Autor a WHERE a.fechaNacimiento <= :fecha AND a.fechaDefuncion >= :fecha")
+    List<Autor> autorVivoEnDeterminadoAnio(@Param("fecha") String fecha);
 
 }

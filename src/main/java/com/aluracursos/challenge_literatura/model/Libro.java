@@ -2,7 +2,7 @@ package com.aluracursos.challenge_literatura.model;
 
 import jakarta.persistence.*;
 
-import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 @Entity
@@ -16,17 +16,18 @@ public class Libro {
     private String titulo;
     @Enumerated(EnumType.STRING)
     private Idioma idioma;
-    private Long numeroDescargas;
+    private Double numeroDescargas;
     @ManyToOne
+    @JoinColumn(name = "autor_id")
     private Autor autor;
 
     public Libro(){}
 
 public Libro(DatosLibro datosLibro){
     this.titulo = datosLibro.titulo();
-    this.idioma = Idioma.fromString(datosLibro.idiomas().stream()
+    this.idioma = Idioma.fromString(datosLibro.idioma().stream()
             .limit(1).collect(Collectors.joining()));
-    this.numeroDescargas = datosLibro.numeroDeDescargas();
+    this.numeroDescargas = OptionalDouble.of(Double.valueOf(datosLibro.numeroDeDescargas())).orElse(0);
 }
 
     @Override
@@ -70,12 +71,12 @@ public Libro(DatosLibro datosLibro){
         this.idioma = idioma;
     }
 
-    public Long getNumeroDescargas() {
+    public Double getNumeroDescargas() {
         return numeroDescargas;
     }
 
     public void setNumeroDescargas(Long numeroDescargas) {
-        this.numeroDescargas = numeroDescargas;
+        this.numeroDescargas = Double.valueOf(numeroDescargas);
     }
 
 
