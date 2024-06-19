@@ -76,6 +76,10 @@ public class Principal {
                     listarLibrosPorIdioma();
                     break;
                 case 7:
+                    top10MasDescargas();
+                    break;
+                case 8:
+                    estadisticasDeLibros();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -201,9 +205,55 @@ public class Principal {
     }
 
     private void listarLibrosPorIdioma(){
-        System.out.println("""
+        Idioma idioma;
+            System.out.println("""
+                <<<<<<<<<<<<BUSQUEDA POR IDIOMA>>>>>>>>>>>>
+                Español
+                Ingles
+                Frances
+                Portugues
                 
+                5 - Regresar al menu anterior
+                <<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>
                 """);
+            System.out.println("selecciona una opcion");
+            try{
+                var seleccion = teclado.nextLine();
+                idioma = Idioma.fromCompleto(seleccion);
+            }catch (IllegalArgumentException e){
+                idioma = Idioma.fromCompleto("Hola");
+            }
+
+            List<Libro> librosPorIdioma = libroRepository.buscarLibrosPorIdioma(idioma);
+            System.out.println("<<<<<<<<<<<<<LIBROS POR IDIOMA>>>>>>>>>>>>>");
+            librosPorIdioma.stream()
+                    .sorted(Comparator.comparing(Libro::getTitulo)).
+                    forEach(System.out::println);
+            System.out.println("\n<<<<<<<<<<<<<<<<<<<<< >>>>>>>>>>>>>>>>>>>>>\n");
+
+
+    }
+
+    private void top10MasDescargas(){
+        List<Libro> libros = libroRepository.findAll();
+        System.out.println("<<<<<<<<<<<<<TOP 10 LIBROS MAS DESCARGADOS>>>>>>>>>>>>>");
+        libros.stream()
+                .sorted(Comparator.comparing(Libro::getNumeroDescargas).reversed())
+                .limit(10)
+                .forEach(System.out::println);
+        System.out.println("\n<<<<<<<<<<<<<<<<<<<<<<<<<<<< >>>>>>>>>>>>>>>>>>>>>\n");
+    }
+
+    private void estadisticasDeLibros(){
+        List<Libro> libros = libroRepository.findAll();
+        DoubleSummaryStatistics est = libros.stream()
+                .filter(l-> l.getNumeroDescargas() > 0.0)
+                .collect(Collectors.summarizingDouble(Libro::getNumeroDescargas));
+        System.out.println("<<<<<<<<<<<<<ESTADISTICAS DE LIBROS>>>>>>>>>>>>>");
+        System.out.println("Total de libros: " + est.getCount());
+        System.out.println("Maximas desgargas: " + est.getMax());
+        System.out.println("Minima descarga: " + est.getMin());
+        System.out.println("\n<<<<<<<<<<<<<<<<<<<<< >>>>>>>>>>>>>>>>>>>>>\n");
     }
 
 }
