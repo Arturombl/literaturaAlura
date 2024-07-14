@@ -1,17 +1,15 @@
 package com.aluracursos.challenge_literatura.model;
 
 public enum Idioma {
-        ES("es", "Español"),
-        FR("fr" , "Frances"),
-        EN("en", "Ingles"),
-        PT("pt", "Protuges");
+        ES("es"),
+        FR("fr"),
+        EN("en"),
+        PT("pt");
 
         private String idioma;
-        private String nombreIdiomaCompleto;
 
-        Idioma(String idioma, String nombreIdiomaCompleto) {
+        Idioma(String idioma) {
             this.idioma = idioma;
-            this.nombreIdiomaCompleto = nombreIdiomaCompleto;
         }
 
         public String getIdioma(){
@@ -26,13 +24,4 @@ public enum Idioma {
             }
             throw new IllegalArgumentException("No constant with text " + text + " found");
         }
-
-    public static Idioma fromCompleto(String text) {
-        for (Idioma idioma : Idioma.values()) {
-            if (idioma.nombreIdiomaCompleto.equalsIgnoreCase(text)) {
-                return idioma;
-            }
-        }
-        throw new IllegalArgumentException("No constant with text " + text + " found");
-    }
 }
